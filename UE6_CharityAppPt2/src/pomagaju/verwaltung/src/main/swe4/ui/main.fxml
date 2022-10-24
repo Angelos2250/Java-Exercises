@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="swe4.ui.MainController">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <tabs>
+          <Tab text="Annahmestellen">
+               <content>
+                  <fx:include source="Annahmestelle.fxml" />
+               </content>
+          </Tab>
+            <Tab text="Bedarf">
+               <content>
+                  <fx:include source="Bedarf.fxml" />
+               </content>
+            </Tab>
+          <Tab text="Spendenankündigungen">
+               <content>
+                  <fx:include source="Spendenankündigungen.fxml" />
+               </content></Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

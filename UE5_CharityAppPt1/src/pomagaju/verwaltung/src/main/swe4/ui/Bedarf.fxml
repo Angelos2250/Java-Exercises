@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="290.0" prefWidth="597.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="swe4.ui.BedarfController">
+   <children>
+      <TableView fx:id="tableView" prefHeight="267.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <columns>
+            <TableColumn fx:id="bezColumn" prefWidth="155.19995725154877" text="Bezeichnung" />
+            <TableColumn fx:id="beschColumn" prefWidth="174.4000244140625" text="Beschreibung" />
+            <TableColumn fx:id="zuColumn" prefWidth="83.20001220703125" text="Zustand" />
+            <TableColumn fx:id="menColumn" prefWidth="60.0" text="Menge" />
+            <TableColumn fx:id="katColumn" prefWidth="67.199951171875" text="Kategorie" />
+            <TableColumn fx:id="bedColumn" prefWidth="55.999969482421875" text="Bedarf" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

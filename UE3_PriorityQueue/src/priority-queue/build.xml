@@ -1,0 +1,99 @@
+<project name="PriorityQueue" default="compile" basedir=".">
+
+  <!-- Specify your main class here. Omit the .class extension. -->
+  <property name="main.class" value="swe4.collections.PriorityQueue"/>
+
+	<property environment="env"/>
+	<property name="jar.name" value="${ant.project.name}.jar"/>
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="target.dir" value="${basedir}/bin"/>
+	<property name="jar.dir" value="${basedir}/jar"/>
+	<property name="local.lib.dir" value="${basedir}/lib"/>
+	<property name="user.lib.dir" value="${env.SWE4_HOME}/lib"/>
+
+	<path id="junit.path">
+		<fileset dir="${user.lib.dir}/junit/platform/" erroronmissingdir="false"/>
+		<fileset dir="${user.lib.dir}/junit/jupiter" erroronmissingdir="false"/>
+	</path>
+
+	<path id="local.libs.path">
+		<fileset dir="${local.lib.dir}" includes="*.jar" erroronmissingdir="false"/>
+	</path>
+
+	<path id="libs.path">
+		<path refid="local.libs.path"/>
+	</path>
+
+	<path id="class.path">
+		<path refid="libs.path"/>
+		<pathelement path="${target.dir}/classes"/>
+	</path>
+
+	<path id="test.class.path">
+		<path refid="class.path"/>
+		<path refid="junit.path"/>
+		<pathelement path="${target.dir}/test-classes"/>
+	</path>
+
+	<target name="all" depends="clean,compile"
+					description="Clean build and dist directories, then compile"/>
+
+	<target name="compile" description="Compile Java sources">
+		<mkdir dir="${target.dir}/classes"/>
+		<javac includeantruntime="false" srcdir="${src.dir}/main" destdir="${target.dir}/classes">
+			<include name="**/*.java"/>
+			<classpath refid="class.path"/>
+		</javac>
+	</target>
+
+	<target name="compile-tests" description="Compile Java sources">
+		<mkdir dir="${target.dir}/test-classes"/>
+		<javac includeantruntime="false" srcdir="${src.dir}/test" destdir="${target.dir}/test-classes">
+			<include name="**/*.java"/>
+			<classpath refid="test.class.path"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="compile,copy-resources"
+					description="Run java application">
+		<java classname="${main.class}" fork="true">
+			<classpath refid="class.path"/>
+		</java>
+	</target>
+
+	<target name="copy-resources" description="Copy resource files">
+		<copy todir="${target.dir}/classes">
+			<fileset dir="${src.dir}/main" excludes="**/*.java"/>
+		</copy>
+	</target>
+
+	<target name="create-jar" depends="compile,copy-resources"
+					description="Package to java archive">
+		<jar destfile="${jar.dir}/${jar.name}" basedir="${target.dir}/classes">
+			<manifest>
+				<attribute name="Main-Class" value="${main.class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run-jar" depends="create-jar"
+					description="Run java application in java archive">
+		<java jar="${jar.dir}/${jar.name}" fork="true">
+			<classpath refid="class.path"/>
+		</java>
+	</target>
+
+	<target name="clean" description="Delete old build and bin directories">
+		<delete dir="${target.dir}"/>
+		<delete dir="${jar.dir}"/>
+	</target>
+
+	<target name="run-unit-tests" depends="compile,copy-resources,compile-tests">
+		<java classpathref="test.class.path"
+					classname="org.junit.platform.console.ConsoleLauncher"
+					fork="true" failonerror="true" taskname="junit">
+			<arg value="--scan-classpath"/>
+			<arg value="--disable-ansi-colors"/>
+		</java>
+	</target>
+</project>
